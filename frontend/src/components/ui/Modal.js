@@ -5,12 +5,8 @@ import { useTheme } from '../../context/ThemeContext';
 const Modal = ({
   show,
   onClose,
-  onConfirm,
   title,
   children,
-  confirmText = 'Confirm',
-  cancelText = 'Cancel',
-  confirmVariant = 'primary',
   styles = {}
 }) => {
   const { currentTheme, themes } = useTheme();
@@ -166,20 +162,7 @@ const Modal = ({
               borderColor: 'var(--color-primary)'
             }}
           >
-            {cancelText}
-          </Button>
-
-          <Button
-            onClick={onConfirm}
-            variant={confirmVariant}
-            style={styles.confirmButton || {
-              backgroundColor: 'var(--color-error)',
-              color: 'white',
-              border: 'none',
-              boxShadow: `2px 2px 0 ${shadowColor}`
-            }}
-          >
-            {confirmText}
+            Close
           </Button>
         </div>
       </div>

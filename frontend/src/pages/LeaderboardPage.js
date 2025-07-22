@@ -48,7 +48,7 @@ function LeaderboardPage() {
                             Leaderboard
                         </h1>
                         <p style={{ color: textColorLight }}>
-                            See who is leading the game
+                            See who is leading the game and how they scored
                         </p>
                     </div>
                 </div>
@@ -59,11 +59,11 @@ function LeaderboardPage() {
                     <Card
                         key={index}
                         className="p-6 cursor-pointer"
-                        style={{ backgroundColor: cardBgColor }}
+                        style={{ backgroundColor: cardBgColor, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', lineHeight: '1' }}
                         onClick={() => handleCardClick(player)}
                     >
-                        <h2 className="text-xl font-display mb-4 pb-2 border-b-2 border-dark" style={{ color: headingColor, borderColor: isDarkTheme ? 'var(--color-light)' : 'var(--color-dark)' }}>{player.name}</h2>
-                        <p className="mb-6" style={{ color: textColor }}>
+                        <h2 className="text-xl font-display m-0 border-b-2 border-dark" style={{ color: headingColor, borderColor: isDarkTheme ? 'var(--color-light)' : 'var(--color-dark)' }}>{player.name}</h2>
+                        <p style={{ color: textColor }}>
                             Score: {player.score}
                         </p>
                     </Card>
