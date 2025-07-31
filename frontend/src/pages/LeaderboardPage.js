@@ -51,7 +51,9 @@ function LeaderboardPage() {
                             return teamData;
                         });
 
-                    setLeaderboard(formattedLeaderboard);
+                    setLeaderboard(
+                        formattedLeaderboard.sort((a, b) => b.score - a.score)
+                    );
                 }
             } catch (error) {
                 console.error("Error fetching leaderboard data:", error);
