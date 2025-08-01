@@ -27,24 +27,32 @@ function LeaderboardPage() {
                 if (values && values.length > 1) {
                     const headers = values[0];
                     const dataRows = values.slice(1);
+                    const minigames = [
+                        'Jeopardy',
+                        'What The Fund',
+                        'Marketing Mania',
+                        '2 Capitalists, 1 Capper',
+                        'Career Ladder',
+                        'Cheap vs Expensive'
+                    ];
                     const formattedLeaderboard = dataRows
                         .filter(row => row[1])
                         .map(row => {
                             const name = row[1] || 'Unnamed Team';
                             const members = [row[2], row[3], row[4]].filter(Boolean).join(', ');
-                            const score = parseInt(row[headers.indexOf('Total Points')], 10) || 0;
                             const breakdown = {};
-                            [
-                                'Jeopardy',
-                                'Pitch Plunge',
-                                'What The Fund',
-                                'Marketing Mania',
-                                '2 Capitalists, 1 Capper',
-                                'Career Ladder',
-                                'Cheap vs Expensive'
-                            ].forEach(game => {
+                            let score = 0;
+                            minigames.forEach(game => {
                                 const idx = headers.indexOf(game);
-                                breakdown[game] = idx !== -1 ? parseInt(row[idx], 10) || 0 : 0;
+                                const cell = idx !== -1 ? row[idx] : '';
+                                let val = 0;
+                                if (cell === undefined || cell === null || cell === '') {
+                                    breakdown[game] = '-';
+                                } else {
+                                    val = parseInt(cell, 10);
+                                    breakdown[game] = isNaN(val) ? '-' : val;
+                                    if (!isNaN(val)) score += val;
+                                }
                             });
                             return {
                                 id: name + '-' + members,
@@ -105,7 +113,7 @@ function LeaderboardPage() {
                             Leaderboard
                         </h1>
                         <p style={{ color: textColorLight }}>
-                            See who is leading the game and how they scored
+                            Refresh to see changes, freezes 20 minutes before the event ends.
                         </p>
                     </div>
                 </div>
