@@ -12,13 +12,10 @@ function LeaderboardPage() {
 
     useEffect(() => {
         const fetchLeaderboardData = async () => {
-            console.log(process.env);
             const apiKey = process.env.REACT_APP_GOOGLE_SHEETS_API_KEY;
             const spreadsheetId = process.env.REACT_APP_SPREADSHEET_ID;
             const range = process.env.REACT_APP_SHEET_RANGE;
-
             const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -27,42 +24,44 @@ function LeaderboardPage() {
                 }
                 const data = await response.json();
                 const values = data.values;
-
                 if (values && values.length > 1) {
                     const headers = values[0];
                     const dataRows = values.slice(1);
-
                     const formattedLeaderboard = dataRows
-                        .filter(row => row[0])
+                        .filter(row => row[1])
                         .map(row => {
-                            const teamData = {
-                                id: row[0],
-                                name: row[1] || 'Unnamed Team',
-                                members: row[2] || 'N/A',
-                                score: parseInt(row[headers.indexOf('Total Points')], 10) || 0,
-                                breakdown: {}
-                            };
-
-                            headers.forEach((header, index) => {
-                                if (header === 'Total Points' || header === 'Team Name' || header === 'Members') return;
-                                teamData.breakdown[header] = parseInt(row[index], 10) || 0;
+                            const name = row[1] || 'Unnamed Team';
+                            const members = [row[2], row[3], row[4]].filter(Boolean).join(', ');
+                            const score = parseInt(row[headers.indexOf('Total Points')], 10) || 0;
+                            const breakdown = {};
+                            [
+                                'Jeopardy',
+                                'Pitch Plunge',
+                                'What The Fund',
+                                'Marketing Mania',
+                                '2 Capitalists, 1 Capper',
+                                'Career Ladder',
+                                'Cheap vs Expensive'
+                            ].forEach(game => {
+                                const idx = headers.indexOf(game);
+                                breakdown[game] = idx !== -1 ? parseInt(row[idx], 10) || 0 : 0;
                             });
-                            
-                            return teamData;
+                            return {
+                                id: name + '-' + members,
+                                name,
+                                members,
+                                score,
+                                breakdown
+                            };
                         });
-
-                    setLeaderboard(
-                        formattedLeaderboard.sort((a, b) => b.score - a.score)
-                    );
+                    setLeaderboard(formattedLeaderboard.sort((a, b) => b.score - a.score));
                 }
             } catch (error) {
-                console.error("Error fetching leaderboard data:", error);
                 setError(`Failed to load leaderboard: ${error.message}`);
             } finally {
                 setLoading(false);
             }
         };
-
         fetchLeaderboardData();
     }, []);
 
@@ -135,13 +134,13 @@ function LeaderboardPage() {
                     title={`${selectedTeam.name}'s Score Breakdown`}
                 >
                     <div style={{ color: textColor }}>
-                      <p className="mb-2"><strong>Members:</strong> {selectedTeam.members}</p>
-                      <ul className="list-disc pl-6">
-                          {Object.entries(selectedTeam.breakdown).map(([game, score]) => (
-                              <li key={game}><strong>{game}:</strong> {score}</li>
-                          ))}
-                      </ul>
-                      <p className="mt-4 text-lg font-bold">Total Score: {selectedTeam.score}</p>
+                        <p className="mb-2"><strong>Members:</strong> {selectedTeam.members}</p>
+                        <ul className="list-disc pl-6">
+                            {Object.entries(selectedTeam.breakdown).map(([game, score]) => (
+                                <li key={game}><strong>{game}:</strong> {score}</li>
+                            ))}
+                        </ul>
+                        <p className="mt-4 text-lg font-bold">Total Points: {selectedTeam.score}</p>
                     </div>
                 </Modal>
             )}
