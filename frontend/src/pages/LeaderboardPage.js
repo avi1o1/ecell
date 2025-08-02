@@ -40,7 +40,7 @@ function LeaderboardPage() {
                         .filter(row => row[1])
                         .map(row => {
                             const name = row[1] || 'Unnamed Team';
-                            const members = [row[2], row[3], row[4]].filter(Boolean).join(', ');
+                            const members = [row[2], row[4], row[6]].filter(Boolean).join(', ');
                             const breakdown = {};
                             let score = 0;
                             minigames.forEach(game => {
