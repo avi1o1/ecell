@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import Card from '../components/ui/Card';
+import { Link } from 'react-router-dom';
 
 function LandingPage() {
     const { themes, currentTheme } = useTheme();
@@ -30,27 +31,28 @@ function LandingPage() {
                     </div>
                 </div>
             </div>
-
-            <Card className="p-6" style={{ backgroundColor: cardBgColor }}>
-                <h2 className="text-xl font-display mb-4 border-b-2 border-dark" style={{ color: headingColor, borderColor: isDarkTheme ? 'var(--color-light)' : 'var(--color-dark)' }}>About ECell</h2>
-                <p className="mb-6" style={{ color: textColor }}>
-                    ECell is dedicated to fostering entrepreneurship and innovation among students. We organize workshops, events, and competitions to inspire and empower the next generation of leaders and innovators.
-                </p>
-            </Card>
-
-            <Card className="p-6 my-6" style={{ backgroundColor: cardBgColor }}>
-                <h2 className="text-xl font-display mb-4 border-b-2 border-dark" style={{ color: headingColor, borderColor: isDarkTheme ? 'var(--color-light)' : 'var(--color-dark)' }}>Our Events</h2>
-                <p className="mb-6" style={{ color: textColor }}>
-                    From hackathons to startup pitch competitions, ECell hosts a variety of events that challenge and inspire participants to think creatively and work collaboratively. Join us to explore your potential and make a difference.
-                </p>
-            </Card>
-
-            <Card className="p-6" style={{ backgroundColor: cardBgColor }}>
-                <h2 className="text-xl font-display mb-4 border-b-2 border-dark" style={{ color: headingColor, borderColor: isDarkTheme ? 'var(--color-light)' : 'var(--color-dark)' }}>Get Involved</h2>
-                <p className="mb-6" style={{ color: textColor }}>
-                    Whether you're a budding entrepreneur or simply curious about innovation, ECell offers opportunities to learn, grow, and connect with like-minded individuals. Be part of our community and start your journey today.
-                </p>
-            </Card>
+            <div className="grid grid-cols-2 gap-6 my-8">
+                <Link to="/leaderboard" className="cursor-pointer">
+                    <Card className="p-6 transition hover:shadow-lg text-center cursor-pointer" style={{ backgroundColor: cardBgColor }}>
+                        <h2 className="text-lg font-display mb-2" style={{ color: headingColor }}>Leaderboard</h2>
+                        <p style={{ color: textColorLight }}>See the top performers and track your progress.</p>
+                    </Card>
+                </Link>
+                <Link to="/game" className="cursor-pointer">
+                    <Card className="p-6 transition hover:shadow-lg text-center cursor-pointer" style={{ backgroundColor: cardBgColor }}>
+                        <h2 className="text-lg font-display mb-2" style={{ color: headingColor }}>Game Rules</h2>
+                        <p style={{ color: textColorLight }}>Read the rules and instructions for the event.</p>
+                    </Card>
+                </Link>
+            </div>
+                <div className="col-span-full">
+                    <Card className="p-6" style={{ backgroundColor: cardBgColor }}>
+                        <h2 className="text-xl font-display mb-4 border-b-2 border-dark" style={{ color: headingColor, borderColor: isDarkTheme ? 'var(--color-light)' : 'var(--color-dark)' }}>About E-Cell</h2>
+                        <p className="mb-6" style={{ color: textColor }}>
+                            ECell is dedicated to fostering entrepreneurship and innovation among students. We organize workshops, events, and competitions to inspire and empower the next generation of leaders and innovators.
+                        </p>
+                    </Card>
+                </div>
         </div>
     );
 }
