@@ -34,7 +34,7 @@ function App() {
                     <img src="/logo.png" alt="E-Cell Logo" style={{ width: 48, height: 48, objectFit: 'contain' }} />
                   </Link>
                   <Link to="/" class="app-logo text-inherit no-underline">
-                    <span>E-Cell IIIT</span>
+                    <span>E-Cell IIITH</span>
                   </Link>
                 </div>
 

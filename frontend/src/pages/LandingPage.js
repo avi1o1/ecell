@@ -31,15 +31,15 @@ function LandingPage() {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-6 my-8">
-                <Link to="/leaderboard" className="cursor-pointer">
-                    <Card className="p-6 transition hover:shadow-lg text-center cursor-pointer" style={{ backgroundColor: cardBgColor }}>
+            <div className="grid grid-cols-2 gap-6 my-8 items-stretch">
+                <Link to="/leaderboard" className="cursor-pointer h-full">
+                    <Card className="p-6 transition hover:shadow-lg text-center cursor-pointer h-full min-h-[180px] flex flex-col justify-center" style={{ backgroundColor: cardBgColor }}>
                         <h2 className="text-lg font-display mb-2" style={{ color: headingColor }}>Leaderboard</h2>
                         <p style={{ color: textColorLight }}>See the top performers and track your progress.</p>
                     </Card>
                 </Link>
-                <Link to="/game" className="cursor-pointer">
-                    <Card className="p-6 transition hover:shadow-lg text-center cursor-pointer" style={{ backgroundColor: cardBgColor }}>
+                <Link to="/game" className="cursor-pointer h-full">
+                    <Card className="p-6 transition hover:shadow-lg text-center cursor-pointer h-full min-h-[180px] flex flex-col justify-center" style={{ backgroundColor: cardBgColor }}>
                         <h2 className="text-lg font-display mb-2" style={{ color: headingColor }}>Game Rules</h2>
                         <p style={{ color: textColorLight }}>Read the rules and instructions for the event.</p>
                     </Card>
