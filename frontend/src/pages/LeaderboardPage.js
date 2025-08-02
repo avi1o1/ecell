@@ -35,7 +35,8 @@ function LeaderboardPage() {
                         'Career Ladder',
                         'Cheap vs Expensive'
                     ];
-                    const pointsSpentIdx = 14;
+                    const photoPointsIdx = 14;
+                    const pointsSpentIdx = 15;
                     const formattedLeaderboard = dataRows
                         .filter(row => row[1])
                         .map(row => {
@@ -55,17 +56,23 @@ function LeaderboardPage() {
                                     if (!isNaN(val)) score += val;
                                 }
                             });
+                            let photoPoints = 0;
+                            if (row.length > photoPointsIdx && row[photoPointsIdx] !== undefined && row[photoPointsIdx] !== null && row[photoPointsIdx] !== '') {
+                                const photoVal = parseInt(row[photoPointsIdx], 10);
+                                photoPoints = isNaN(photoVal) ? 0 : photoVal;
+                            }
                             let pointsSpent = 0;
                             if (row.length > pointsSpentIdx && row[pointsSpentIdx] !== undefined && row[pointsSpentIdx] !== null && row[pointsSpentIdx] !== '') {
                                 const spentVal = parseInt(row[pointsSpentIdx], 10);
                                 pointsSpent = isNaN(spentVal) ? 0 : spentVal;
                             }
+                            breakdown['Photo Points'] = photoPoints;
                             breakdown['Points Spent'] = pointsSpent;
                             return {
                                 id: name + '-' + members,
                                 name,
                                 members,
-                                score: score - pointsSpent,
+                                score: score + photoPoints - pointsSpent,
                                 breakdown
                             };
                         });
